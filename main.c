@@ -48,6 +48,10 @@ int main(int argc, char *argv[]){
         }
         i++;
     }
+    if(paramGeo == NULL || outPath == NULL){
+        printf("\nERRO\nArgumento essencial nao inserido\n");
+        exit(1);
+    }
     tratamento(path,outPath,paramGeo,paramQry);
     if(paramQry != NULL){
 	    free(paramQry);

@@ -113,7 +113,7 @@ void qry(Lista list[7], char path[], char nomeSaida[]){
         if(strcmp(tipo,"o?") == 0){
             fscanf(consulta,"%d %d\n",&j,&k);
             fprintf(saida,"%s %d %d\n",tipo,j,k);
-            //intersecao(svg,saida,list,j,k);
+            intersecao(svg,saida,list,j,k);
         }
         else if(strcmp(tipo,"i?") == 0){
             fscanf(consulta,"%d %lf %lf\n",&j,&x,&y);
@@ -152,7 +152,7 @@ void qry(Lista list[7], char path[], char nomeSaida[]){
                 fscanf(consulta,"%s %lf",cepid,&h);
                 fprintf(saida,"%s %s %lf",tipo,cepid,h);
             }
-            //dq(svg,saida,list,cepid,h,i);
+            dq(svg,saida,list,cepid,h,i);
         }
         else if(strcmp(tipo,"del") == 0){
             fscanf(consulta,"%s\n", cepid);
