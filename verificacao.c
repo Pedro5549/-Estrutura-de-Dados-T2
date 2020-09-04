@@ -28,7 +28,7 @@ double distancia(double x1, double y1, double x2, double y2){
     return sqrt(pow(x1 - x2,2) + pow(y1 - y2,2));
 }
 
-void retangulointCirculo(Circulo c, Retangulo r, int idc, int idr, FILE* txt, FILE* svg){
+void retanguloIntCirculo(Circulo c, Retangulo r, int idc, int idr, FILE* txt, FILE* svg){
     double deltaX, deltaY, x, y, w, h;
     if(getXCirc(c) > getXRet(r)){
         deltaX = pow(getXRet(r) + getWRet(r) - getXCirc(c),2);
@@ -56,12 +56,12 @@ void retangulointCirculo(Circulo c, Retangulo r, int idc, int idr, FILE* txt, FI
 }
 
 void circuloInt(Circulo c1, int idc1, Circulo c2, int idc2, FILE* txt, FILE* svg){
-    double dist,x,y,w,h;
-    x = min(getXCirc(c1) - getRCirc(c1), getXCirc(c2) - getRCirc(c2));
-    w = max(getXCirc(c1) + getRCirc(c1), getXCirc(c2) + getRCirc(c2)) - x;
-    y = min(getYCirc(c1) - getRCirc(c1), getYCirc(c2) - getRCirc(c2));
-    h = max(getYCirc(c1) + getRCirc(c1), getYCirc(c2) + getRCirc(c2)) - y;
-    if(distancia(getXCirc(c1), getXYCirc(c1), getXCirc(c2), getXYCirc(c2)) <= getRCirc(c2) + getRCirc(c1)){
+    double x,y,w,h;
+    x = menor(getXCirc(c1) - getRCirc(c1), getXCirc(c2) - getRCirc(c2));
+    w = maior(getXCirc(c1) + getRCirc(c1), getXCirc(c2) + getRCirc(c2)) - x;
+    y = menor(getYCirc(c1) - getRCirc(c1), getYCirc(c2) - getRCirc(c2));
+    h = maior(getYCirc(c1) + getRCirc(c1), getYCirc(c2) + getRCirc(c2)) - y;
+    if(distancia(getXCirc(c1), getXCirc(c1), getXCirc(c2), getYCirc(c2)) <= getRCirc(c2) + getRCirc(c1)){
         fprintf(txt,"%d: circulo %d: circulo SIM",idc1,idc2);
         fprintf(svg,"<rect x='%lf' y='%lf' width='%lf' height='%lf' fill='none' stroke='black'/>\n",x,y,w,h);
     }
@@ -73,10 +73,10 @@ void circuloInt(Circulo c1, int idc1, Circulo c2, int idc2, FILE* txt, FILE* svg
 
 void retanguloInt(Retangulo r1, int idr1, Retangulo r2, int idr2, FILE* txt, FILE* svg){
     double x,w,y,h;
-    x = min(getXRet(r1),getXRet(r2));
-    w = max(getXRet(r1) + getWRet(r1),getXRet(r2) + getWRet(r2)) - x;
-    y = min(getYRet(r1),getYRet(r2));
-    h = max(getYRet(r1) + getHRet(r1),getYRet(r2) + getHRet(r2)) - y;
+    x = menor(getXRet(r1),getXRet(r2));
+    w = maior(getXRet(r1) + getWRet(r1),getXRet(r2) + getWRet(r2)) - x;
+    y = menor(getYRet(r1),getYRet(r2));
+    h = maior(getYRet(r1) + getHRet(r1),getYRet(r2) + getHRet(r2)) - y;
     if (w <= getWRet(r1) + getWRet(r2) && h <= getHRet(r1) + getHRet(r2)){
         fprintf(txt,"%d: retangulo %d: retangulo SIM",idr1,idr2);
         fprintf(svg,"<rect x='%lf' y='%lf' width='%lf' height='%lf' fill='none' stroke='black'/>\n",x,y,w,h);

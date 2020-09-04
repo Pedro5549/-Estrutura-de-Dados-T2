@@ -7,7 +7,7 @@
 #include "quadra.h"
 #include "instrumentoUrbano.h"
 #include "lista.h"
-//#include "qry.h"
+#include "qry.h"
 #include "svg.h"
 
 char *obterNomeArquivo(char path[]){

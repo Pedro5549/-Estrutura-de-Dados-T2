@@ -68,17 +68,17 @@ void setCorpTxt(Texto txt, char cor[]){
     strcpy(texto->corp, cor);
 }
 
-char* getTextoTxt(Texto txt){
+char* getTexto(Texto txt){
     TextoStruct* texto = (TextoStruct*) txt;
     return texto->txt;
 }
 
-void setTextoTxt(Texto txt, char linha[]){
+void setTexto(Texto txt, char linha[]){
     TextoStruct* texto = (TextoStruct*) txt;
     strcpy(texto->txt, linha);
 }
 
 void desenharTexto(FILE* svg, Texto txt){
     TextoStruct* texto = (TextoStruct*) txt;
-    fprintf(svg,"\t<text x=\"%d\" y=\"%d\" stroke=\"%s\" stroke-width=\"0.3\" fill=\"%s\">%s</text>\n",texto->x,texto->y,texto->corb,texto->corp,texto->txt);
+    fprintf(svg,"\t<text x=\"%lf\" y=\"%lf\" stroke=\"%s\" stroke-width=\"0.3\" fill=\"%s\">%s</text>\n",texto->x,texto->y,texto->corb,texto->corp,texto->txt);
 }

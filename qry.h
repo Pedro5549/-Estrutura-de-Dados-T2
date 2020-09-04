@@ -9,7 +9,9 @@
 #include "instrumentoUrbano.h"
 
 void intersecao(FILE* svg, FILE* txt, Lista list[7], int j, int k);
+//seleciona as figuras para realizar o comando i?
 
 void dq(FILE* svg,FILE* txt, Lista list[7],char cepid[], double r, int flag);
+//executa o comando dq
 
 #endif
