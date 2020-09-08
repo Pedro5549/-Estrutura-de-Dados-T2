@@ -8,18 +8,18 @@ typedef struct circulo{
     double x;
     double y;
     double r;
-    double espessura;
+    char espessura[10];
     char corb[22];
     char corp[22];
 } CirculoStruct;
 
-Circulo criarCirculo(int id, double x, double y, double r, double espessura, char corp[], char corb[]){
+Circulo criarCirculo(int id, double x, double y, double r, char espessura[], char corp[], char corb[]){
     CirculoStruct* circulo = (CirculoStruct*) malloc(sizeof(CirculoStruct));
     circulo->id = id;
     circulo->x = x;
     circulo->y = y;
     circulo->r = r;
-    circulo->espessura = espessura;
+    strcpy(circulo->espessura, espessura);
     strcpy(circulo->corb, corb);
     strcpy(circulo->corp, corp);
     return circulo;
@@ -61,14 +61,14 @@ void setRCirc(Circulo circ, double r){
     circulo->r = r;
 }
 
-double getEspessuraCirc(Circulo circ){
+char* getEspessuraCirc(Circulo circ){
     CirculoStruct* circulo = (CirculoStruct*) circ;
     return circulo->espessura;
 }
 
-void setEspessuraCirc(Circulo circ, double espessura){
+void setEspessuraCirc(Circulo circ, char espessura[]){
     CirculoStruct* circulo = (CirculoStruct*) circ;
-    circulo->espessura = espessura;
+    strcpy(circulo->espessura, espessura);
 }
 
 
@@ -94,5 +94,5 @@ void setCorpCirc(Circulo circ, char cor[]){
 
 void desenharCirculo(FILE* svg, Circulo circulo){
     CirculoStruct* circ = (CirculoStruct*) circulo;
-    fprintf(svg,"\t<circle cx=\"%lf\" cy=\"%lf\" r=\"%lf\" fill=\"%s\" stroke=\"%s\" stroke-width=\"%lf\"/>\n",circ->x,circ->y,circ->r,circ->corp,circ->corb,circ->espessura);
+    fprintf(svg,"\t<circle cx=\"%lf\" cy=\"%lf\" r=\"%lf\" fill=\"%s\" stroke=\"%s\" stroke-width=\"%s\"/>\n",circ->x,circ->y,circ->r,circ->corp,circ->corb,circ->espessura);
 }

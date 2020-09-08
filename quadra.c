@@ -9,18 +9,18 @@ typedef struct quadra{
     double y;
     double w;
     double h;
-    double espessura;
+    char espessura[10];
     char corb[22];
     char corp[22];
 }QuadraStruct;
 
-Quadra criarQuadra(char cep[], double x, double y, double espessura, double w, double h, char corp[], char corb[]){
+Quadra criarQuadra(char cep[], double x, double y, char espessura[], double w, double h, char corp[], char corb[]){
     QuadraStruct* quadra = (QuadraStruct*) malloc(sizeof(QuadraStruct));
     quadra->x = x;
     quadra->y = y;
-    quadra->espessura = espessura;
     quadra->h = h;
     quadra->w = w;
+    strcpy(quadra->espessura, espessura);
     strcpy(quadra->cep,cep);
     strcpy(quadra->corb,corb);
     strcpy(quadra->corp,corp);
@@ -72,14 +72,14 @@ void setHQuad(Quadra quadra, double h){
     quad->h = h;
 }
 
-double getEspessuraQuad(Quadra quadra){
+char* getEspessuraQuad(Quadra quadra){
     QuadraStruct* quad = (QuadraStruct*) quadra;
     return quad->espessura;
 }
 
-void setEspessuraQuad(Quadra quadra, double espessura){
+void setEspessuraQuad(Quadra quadra, char espessura[]){
     QuadraStruct* quad = (QuadraStruct*) quadra;
-    quad->espessura = espessura;
+    strcpy(quad->espessura, espessura);
 }
 
 char* getCorbQuad(Quadra quadra){
@@ -104,6 +104,6 @@ void setCorpQuad(Quadra quadra, char corp[]){
 
 void desenharQuadra(FILE* svg, Quadra quadra){
     QuadraStruct* quad = (QuadraStruct*) quadra;
-    fprintf(svg,"\t<rect x=\"%lf\" y=\"%lf\" width=\"%lf\" height=\"%lf\" fill=\"%s\" stroke=\"%s\"  stroke-width=\"%lf\"/>\n",quad->x,quad->y,quad->w,quad->h,quad->corp,quad->corb,quad->espessura);
+    fprintf(svg,"\t<rect x=\"%lf\" y=\"%lf\" width=\"%lf\" height=\"%lf\" fill=\"%s\" stroke=\"%s\"  stroke-width=\"%s\"/>\n",quad->x,quad->y,quad->w,quad->h,quad->corp,quad->corb,quad->espessura);
     fprintf(svg,"\t<text x=\"%lf\" y=\"%lf\" >%s</text>\n", quad->x + quad->w/2, quad->y + quad->h/2, quad->cep);
 }

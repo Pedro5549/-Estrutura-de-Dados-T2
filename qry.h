@@ -17,6 +17,9 @@ void delf(FILE* txt, Lista list[7], int j);
 void intersecao(FILE* svg, FILE* txt, Lista list[7], int j, int k);
 //Seleciona as figuras para realizar o comando i?
 
+void pontoInterno(FILE* svg, FILE* txt,Lista list[], int j, double xPonto,double yPonto);
+//Verifica se o ponto é interno a figura e desenha no svg o ponto e a linha
+
 void dq(FILE* svg, FILE* txt, Lista list[7], char cepid[], double r, int flag);
 //Executa o comando dq
 
@@ -27,5 +30,9 @@ void cbq(FILE* txt, Lista list[7], double x, double y, double r, char cstrk[]);
 //Muda a cor da borda para cstrk de todas as quadras que estiverem dentro do circulo centrado em x,y e raio r
 
 void crd(FILE* txt, Lista list[7], char cepid[]);
+//Adiciona ao arquivo txt as informações sobre a quadra/instrumento urbano
+
+void car(FILE* svg, FILE* txt, Lista list[7], double px, double py, double pw, double ph);
+//Calcula a area das figuras dentro do retangulo e adiciona as informações nos arquivos de saida
 
 #endif

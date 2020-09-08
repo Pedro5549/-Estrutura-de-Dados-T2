@@ -4,7 +4,7 @@
 
 typedef void* Retangulo;
 
-Retangulo criarRetangulo(int id, double x, double y, double w, double h, double espessura, char corp[], char corb[]);
+Retangulo criarRetangulo(int id, double x, double y, double w, double h, char espessura[], char corp[], char corb[]);
 // "constructor da estrutura retangulo"
 
 int getIdRet(Retangulo ret);
@@ -22,10 +22,10 @@ double getYRet(Retangulo ret);
 void setYRet(Retangulo ret, double y);
 // atualiza o valor de y do retangulo
 
-double getEspessuraRet(Retangulo ret);
+char* getEspessuraRet(Retangulo ret);
 // retorna o valor da espessura da borda do retangulo
 
-void setEspessuraRet(Retangulo ret, double espessura);
+void setEspessuraRet(Retangulo ret, char espessura[]);
 // atualiza o valor da espessura da borda do retangulo
 
 double getWRet(Retangulo ret);

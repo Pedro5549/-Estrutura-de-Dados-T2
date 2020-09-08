@@ -9,19 +9,19 @@ typedef struct retangulo{
     double y;
     double w;
     double h;
-    double espessura;
+    char espessura[10];
     char corb[22];
     char corp[22];
 } RetanguloStruct;
 
-Retangulo criarRetangulo(int id, double x, double y, double w, double h, double espessura, char corp[], char corb[]){
+Retangulo criarRetangulo(int id, double x, double y, double w, double h, char espessura[], char corp[], char corb[]){
     RetanguloStruct* retangulo = (RetanguloStruct*) malloc(sizeof(RetanguloStruct));
     retangulo->id = id;
     retangulo->x = x;
     retangulo->y = y;
     retangulo->w = w;
     retangulo->h = h;
-    retangulo->espessura = espessura;
+    strcpy(retangulo->espessura, espessura);
     strcpy(retangulo->corb, corb);
     strcpy(retangulo->corp, corp);
     return retangulo;
@@ -52,14 +52,14 @@ void setYRet(Retangulo ret, double y){
     retangulo->y = y;
 }
 
-double getEspessuraRet(Retangulo ret){
+char* getEspessuraRet(Retangulo ret){
     RetanguloStruct* retangulo = (RetanguloStruct*) ret;
     return retangulo->espessura;
 }
 
-void setEspessuraRet(Retangulo ret, double espessura){
+void setEspessuraRet(Retangulo ret, char espessura[]){
     RetanguloStruct* retangulo = (RetanguloStruct*) ret;
-    retangulo->espessura = espessura;
+    strcpy(retangulo->espessura, espessura);
 }
 
 double getWRet(Retangulo ret){
@@ -104,5 +104,5 @@ void setCorpRet(Retangulo ret, char cor[]){
 
 void desenharRetangulo(FILE* svg, Retangulo retangulo){
     RetanguloStruct* ret = (RetanguloStruct*) retangulo;
-    fprintf(svg,"\t<rect x=\"%lf\" y=\"%lf\" width=\"%lf\" height=\"%lf\" fill=\"%s\" stroke=\"%s\"  stroke-width=\"%lf\"/>\n",ret->x,ret->y,ret->w,ret->h,ret->corp,ret->corb,ret->espessura);
+    fprintf(svg,"\t<rect x=\"%lf\" y=\"%lf\" width=\"%lf\" height=\"%lf\" fill=\"%s\" stroke=\"%s\"  stroke-width=\"%s\"/>\n",ret->x,ret->y,ret->w,ret->h,ret->corp,ret->corb,ret->espessura);
 }

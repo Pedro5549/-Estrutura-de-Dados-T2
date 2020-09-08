@@ -21,7 +21,13 @@ char *obterNomeArquivo(char path[]){
 void geo(Lista list[7], char geoArq[], char saida[]){
     char tipo[4] ,corb[22] ,corp[22], cepid[20], texto[255];
     int i;
-    double x,y,w,h,cw = 1 ,rw = 1, eq = 1, eh = 1, es = 1, er = 1; 
+    double x,y,w,h;
+    char cw[10] = "1";
+    char rw[10] = "1";
+    char eq[10] = "1";
+    char eh[10] = "1";
+    char es[10] = "1";
+    char er[10] = "1";
 	char corQP[22] = "blue";
 	char corQB[22] = "blue";
 	char corHP[22] = "blue";
@@ -72,19 +78,19 @@ void geo(Lista list[7], char geoArq[], char saida[]){
             insert(list[6], criarInstrumento(cepid,x,y,er,corRP,corRB));
         }
         else if(strcmp(tipo,"cq") == 0){
-            fscanf(geo,"%lf %s %s\n", &eq, corQP, corQB);
+            fscanf(geo,"%a %s %s\n", eq, corQP, corQB);
         }
         else if(strcmp(tipo,"ch") == 0){
-            fscanf(geo,"%lf %s %s\n", &eh, corHP, corHB);
+            fscanf(geo,"%s %s %s\n", eh, corHP, corHB);
         }
         else if(strcmp(tipo,"cs") == 0){
-            fscanf(geo,"%lf %s %s\n", &es, corSP, corSB);
+            fscanf(geo,"%s %s %s\n", es, corSP, corSB);
         }
         else if(strcmp(tipo,"cr") == 0){
-            fscanf(geo,"%lf %s %s\n", &er, corRP, corRB);
+            fscanf(geo,"%s %s %s\n", er, corRP, corRB);
         }
         else if(strcmp(tipo,"sw") == 0){
-            fscanf(geo,"%lf %lf\n", &cw, &rw);
+            fscanf(geo,"%s %s\n", cw, rw);
         }
     }
     FILE* svg = iniciarSvg(saida);
@@ -118,7 +124,7 @@ void qry(Lista list[7], char path[], char nomeSaida[]){
         else if(strcmp(tipo,"i?") == 0){
 	        fscanf(consulta,"%d %lf %lf\n",&j,&x,&y);
 	        fprintf(saida,"%s %d %lf %lf\n",tipo,j,x,y);
-	        //interno(svg,saida,list,j,x,y)
+	        PontoInterno(svg,saida,list,j,x,y);
         }
         else if(strcmp(tipo,"pnt") == 0){
 	        fscanf(consulta,"%d %s %s\n",&j,corb,corp);
@@ -170,7 +176,7 @@ void qry(Lista list[7], char path[], char nomeSaida[]){
         else if(strcmp(tipo,"crd") == 0){
             fscanf(consulta,"%s\n", cepid);
             fprintf(saida,"%s %s\n",tipo,cepid);
-            //crd(saida,list,cepid);
+            crd(saida,list,cepid);
         }
         else if(strcmp(tipo,"car") == 0){
             fscanf(consulta,"%lf %lf %lf %lf\n", &x, &y ,&w, &h);

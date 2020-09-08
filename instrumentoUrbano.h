@@ -4,7 +4,7 @@
 
 typedef void* Instrumento;
 
-Instrumento criarInstrumento(char id[], double x, double y, double espessura, char corp[], char corb[]);
+Instrumento criarInstrumento(char id[], double x, double y, char espessura[], char corp[], char corb[]);
 //"constructor" da estrutura instrumento urbano
 
 char* getIdIU(Instrumento instrumento);
@@ -22,10 +22,10 @@ double getYIU(Instrumento instrumento);
 void setYIU(Instrumento instrumento, double y);
 // atualiza o valor de y do instrumento urbano
 
-double getEspessuraIU(Instrumento instrumento);
+char* getEspessuraIU(Instrumento instrumento);
 // retorna o valor da espessura da borda do instrumento urbano
 
-void setEspessuraIU(Instrumento instrumento, double espessura);
+void setEspessuraIU(Instrumento instrumento, char espessura[]);
 // atualiza o valor da espessura da borda do instrumento urbano
 
 char* getCorbIU(Instrumento instrumento);

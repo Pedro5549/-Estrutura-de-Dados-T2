@@ -53,8 +53,8 @@ void pnt(FILE* txt, Lista list[7], int j, char corb[], char corp[]) {
 void delf(FILE* txt, Lista list[7], int j) {
     No node;
     Info fig;
-    double x, y, r, espessura, w, h;
-    char *corb, *corp, *text;
+    double x, y, r, w, h;
+    char *corb, *corp, *text, *espessura;
 
     for(node = getFirst(list[0]); node != NULL; node = getNext(node)) {
         fig = getInfo(node);
@@ -65,7 +65,7 @@ void delf(FILE* txt, Lista list[7], int j) {
             espessura = getEspessuraCirc(fig);
             corb = getCorbCirc(fig);
             corp = getCorpCirc(fig);
-            fprintf(txt, "id: %d x: %lf y: %lf r: %lf espessura: %lf corb: %s corp: %s\n", j, x, y, r, espessura, corb, corp);
+            fprintf(txt, "id: %d x: %lf y: %lf r: %lf espessura: %s corb: %s corp: %s\n", j, x, y, r, espessura, corb, corp);
             removeNode(list[0], node);
             return;
         }
@@ -80,7 +80,7 @@ void delf(FILE* txt, Lista list[7], int j) {
             espessura = getEspessuraRet(fig);
             corb = getCorbRet(fig);
             corp = getCorpRet(fig);
-            fprintf(txt, "id: %d x: %lf y: %lf w: %lf h: %lf espessura: %lf corb: %s corp: %s\n", j, x, y, w, h, espessura, corb, corp);
+            fprintf(txt, "id: %d x: %lf y: %lf w: %lf h: %lf espessura: %s corb: %s corp: %s\n", j, x, y, w, h, espessura, corb, corp);
             removeNode(list[1], node);
             return;
         }
@@ -144,6 +144,53 @@ void intersecao(FILE* svg, FILE* txt, Lista list[7], int j, int k){
     }
 }
 
+void pontoInterno(FILE* svg, FILE* txt,Lista list[], int j, double xPonto,double yPonto){
+    No node;
+    Info info;
+    double x,y,w,h;
+    char cor[10];
+    for(node = getFirst(list[0]); node != NULL; node = getNext(node)){
+        info = getInfo(node);
+        if(j == getIdCirc(info)){
+            x = getXCirc(info);
+            y = getYCirc(info);
+            h = getRCirc(info);
+            if(pontoInternoCirc(xPonto,yPonto,x,y,h)){
+                fprintf(txt,"%d: circulo INTERNO\n",j);
+                strcpy(cor,"blue");
+            }
+            else{
+                fprintf(txt,"%d: circulo NAO INTERNO\n",j);
+                strcpy(cor,"magenta");
+            }
+            fprintf(svg, "\t<line x1=\"%lf\" y1=\"%lf\" x2=\"%lf\" y2=\"%lf\" style=\"stroke: \"%s\"; stroke-width: 1\" />\n", xPonto,yPonto,x,y,cor);
+            fprintf(svg,"\t<circle cx=\"%lf\" cy=\"%lf\" r=\"5\" fill=\"%s\" stroke=\"%s\"/>\n",xPonto,yPonto,cor,cor);
+            return;
+        }
+        
+    }
+    for(node = getFirst(list[1]); node != NULL; node = getNext(node)){
+        info = getInfo(node);
+        if(j == getIdRet(info)){
+            x = getXRet(info);
+            y = getYRet(info);
+            h = getHRet(info);
+            w = getHRet(info);
+            if(pontoInternoRet(xPonto,yPonto,x,y,w,h)){
+                fprintf(txt,"%d: retangulo INTERNO\n",j);
+                strcpy(cor,"blue");
+            }
+            else{
+                fprintf(txt,"%d: retangulo NAO INTERNO\n",j);
+                strcpy(cor,"magenta");
+            }
+            fprintf(svg, "\t<line x1=\"%lf\" y1=\"%lf\" x2=\"%lf\" y2=\"%lf\" style=\"stroke: \"%s\"; stroke-width: 1\" />\n", xPonto,yPonto,x + w/2,y + h/2,cor);
+            fprintf(svg,"\t<circle cx=\"%lf\" cy=\"%lf\" r=\"5\" fill=\"%s\" stroke=\"%s\"/>\n",xPonto,yPonto,cor,cor);
+            return;
+        }
+    }
+}
+
 void dq(FILE* svg,FILE* txt, Lista list[7],char id[], double r, int flag){
     Info info;
     No aux, node;
@@ -158,7 +205,7 @@ void dq(FILE* svg,FILE* txt, Lista list[7],char id[], double r, int flag){
         i = 5;
         fprintf(txt,"Semaforo: ");
         break;
-    case 't':
+    case 'r':
         i = 6;
         fprintf(txt,"Torre de Radio: ");
         break;
@@ -195,13 +242,13 @@ void dq(FILE* svg,FILE* txt, Lista list[7],char id[], double r, int flag){
         }
     }
 }
-//TODO: adicionar texto
+
 void del(FILE* svg, FILE* txt, Lista list[7], char cepid[]) {
     Info fig;
     No node;
     int i = 3;
-    double x, y, w, h, espessura;
-    char *corb, *corp;
+    double x, y, w, h;
+    char *corb, *corp, *espessura;
     switch (cepid[0]){
     case 'h':
         i = 4;
@@ -211,7 +258,7 @@ void del(FILE* svg, FILE* txt, Lista list[7], char cepid[]) {
         i = 5;
         fprintf(txt, "Semaforo: ");
         break;
-    case 't':
+    case 'r':
         i = 6;
         fprintf(txt, "Torre de Radio: ");
         break;
@@ -228,10 +275,11 @@ void del(FILE* svg, FILE* txt, Lista list[7], char cepid[]) {
                 espessura = getEspessuraQuad(fig);
                 corb = getCorbQuad(fig);
                 corp = getCorpQuad(fig);
-                fprintf(txt, "CEP: %s x: %lf y: %lf w: %lf h: %lf espessura: %lf corb: %s corp: %s\n", cepid, x, y, w, h, espessura, corb, corp);
+                fprintf(txt, "CEP: %s x: %lf y: %lf w: %lf h: %lf espessura: %s corb: %s corp: %s\n", cepid, x, y, w, h, espessura, corb, corp);
                 x = (w + x)/2;
                 y = (h + y)/2;
                 fprintf(svg, "\t<line x1=\"%lf\" y1=\"%lf\" x2=\"%lf\" y2=\"0\" style=\"stroke: black; stroke-width: 1\" />\n", x, y, x);
+                fprintf(svg, "\t<text x=\"%lf\" y=\"0\">CEP: %s</text>\n", x + 3,cepid);
                 removeNode(list[i], fig);
                 return;
             } else {
@@ -244,7 +292,8 @@ void del(FILE* svg, FILE* txt, Lista list[7], char cepid[]) {
                         corb = getCorbIU(fig);
                         corp = getCorpIU(fig);
                         fprintf(svg, "\t<line x1=\"%lf\" y1=\"%lf\" x2=\"%lf\" y2=\"0\" style=\"stroke: black; stroke-width: 1 />\n", x, y, x);
-                        fprintf(txt, "ID: %s x: %lf y: %lf espessura: %lf corb: %s corp: %s", cepid, x, y, espessura, corb, corp);
+                        fprintf(svg, "\t<text x=\"%lf\" y=\"0\">ID: %s</text>\n", x + 3,cepid);
+                        fprintf(txt, "ID: %s x: %lf y: %lf espessura: %s corb: %s corp: %s", cepid, x, y, espessura, corb, corp);
                         removeNode(list[i], fig);
                         return;
                     }
@@ -269,20 +318,24 @@ void cbq(FILE* txt, Lista list[7], double x, double y, double r, char cstrk[]) {
 void crd(FILE* txt, Lista list[7], char cepid[]) {
     No node;
     Info fig;
-    int = 3;
+    int i = 3;
     double x, y;
-    switch (cepid) {
+    char tipo[15] = "Quadra";
+    switch (cepid[0]) {
     case 'h':
         i = 4;
         fprintf(txt, "Hidrante: ");
+        strcpy(tipo, "Hidrante");
         break;
     case 's':
         i = 5;
         fprintf(txt, "Semaforo: ");
+        strcpy(tipo, "Semaforo");
         break;
-    case 't':
+    case 'r':
         i = 6;
         fprintf(txt, "Torre de Radio: ");
+        strcpy(tipo, "Torre de radio");
         break;  
     }
     if (i == 3) {
@@ -291,7 +344,7 @@ void crd(FILE* txt, Lista list[7], char cepid[]) {
             if (strcmp(cepid, getCEP(fig)) == 0) {
                 x = getXQuad(fig);
                 y = getYQuad(fig);
-                fprintf(txt, "%lf %lf\n", x, y);
+                fprintf(txt, "Tipo: %s x: %lf y: %lf\n", tipo, x, y);
                 return;
             }
         }
@@ -301,9 +354,33 @@ void crd(FILE* txt, Lista list[7], char cepid[]) {
             if (strcmp(cepid, getIdIU(fig)) == 0) {
                 x = getXIU(fig);
                 y = getYIU(fig);
-                fprintf(txt, "%lf %lf\n", x, y);
+                fprintf(txt, "Tipo: %s x: %lf y: %lf\n", tipo, x, y);
                 return;
             }
         }
     }
+}
+
+void car(FILE* svg, FILE* txt, Lista list[7], double px, double py, double pw, double ph) {
+    Info fig;
+    No node;
+    double area = 0, x, y, w, h;
+    char *cep;
+    fprintf(svg, "\t<rect x=\"%lf\" y=\"%lf\" width=\"%lf\" height=\"%lf\"/>\n", px, py, pw, ph);
+    fprintf(svg, "\t<line x1=\"%lf\" y1=\"%lf\" x2=\"%lf\" y2=\"0\" style=\"/>\n", px, py, px);
+    for(node = getFirst(list[3]); node != NULL; node = getNext(list[3])) {
+        fig = getInfo(node);
+        if (quadraInternoRet(fig, px, py, pw, ph)) {
+            x = getXQuad(fig);
+            y = getYQuad(fig);
+            w = getWQuad(fig);
+            h = getHQuad(fig);
+            cep = getCEP(fig);
+            area += (w * h);
+            fprintf(svg, "\t<text x=\"%lf\" y=\"%lf\">Area: %lf m²</text>\n", x + w/2, y + h/2, w * h);
+            fprintf(txt, "CEP: %s\n", cep);
+        }
+    }
+    fprintf(svg, "\t<text x=\"%lf\" y=\"0\">Area total: %lf m²</text>\n", px + 3, area);
+    fprintf(txt, "Area total: %lf\n", area);
 }

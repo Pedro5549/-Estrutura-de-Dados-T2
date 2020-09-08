@@ -7,16 +7,16 @@ typedef struct instrumento{
     char id[20];
     double x;
     double y;
-    double espessura;
+    char espessura[10];
     char corb[22];
     char corp[22];
 } InstrumentoStruct;
 
-Instrumento criarInstrumento(char id[], double x, double y, double espessura, char corp[], char corb[]){
+Instrumento criarInstrumento(char id[], double x, double y, char espessura[], char corp[], char corb[]){
     InstrumentoStruct* iu = (InstrumentoStruct*)malloc(sizeof(InstrumentoStruct));
     iu->x = x;
     iu->y = y;
-    iu->espessura = espessura;
+    strcpy(iu->espessura, espessura);
     strcpy(iu->id,id);
     strcpy(iu->corb,corb);
     strcpy(iu->corp,corp);
@@ -48,14 +48,14 @@ void setYIU(Instrumento instrumento, double y){
     iu->y = y;
 }
 
-double getEspessuraIU(Instrumento instrumento){
+char* getEspessuraIU(Instrumento instrumento){
     InstrumentoStruct* iu = (InstrumentoStruct*) instrumento;
     return iu->espessura;
 }
 
-void setEspessuraIU(Instrumento instrumento, double espessura){
+void setEspessuraIU(Instrumento instrumento, char espessura[]){
     InstrumentoStruct* iu = (InstrumentoStruct*) instrumento;
-    iu->espessura = espessura;
+    strcpy(iu->espessura, espessura);
 }
 
 char* getCorbIU(Instrumento instrumento){
@@ -80,5 +80,5 @@ void setCorpIU(Instrumento instrumento, char corp[]){
 
 void desenharIU(FILE* svg, Instrumento instrumento){
     InstrumentoStruct* iu = (InstrumentoStruct*) instrumento;
-    fprintf(svg,"\t<circle cx=\"%lf\" cy=\"%lf\" r=\"5\" fill=\"%s\" stroke=\"%s\" stroke-width=\"%f\"/>\n",iu->x,iu->y,iu->corp,iu->corb,iu->espessura);
+    fprintf(svg,"\t<circle cx=\"%lf\" cy=\"%lf\" r=\"5\" fill=\"%s\" stroke=\"%s\" stroke-width=\"%s\"/>\n",iu->x,iu->y,iu->corp,iu->corb,iu->espessura);
 }

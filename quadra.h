@@ -4,7 +4,7 @@
 
 typedef void* Quadra;
 
-Quadra criarQuadra(char cep[], double x, double y, double espessura, double w, double h, char corp[], char corb[]);
+Quadra criarQuadra(char cep[], double x, double y, char espessura[], double w, double h, char corp[], char corb[]);
 // "constructor" da estrutura quadra
 
 char* getCEP(Quadra quadra);
@@ -34,10 +34,10 @@ double getHQuad(Quadra quadra);
 void setHQuad(Quadra quadra, double h);
 // atualiza o valor de h da quadra
 
-double getEspessuraQuad(Quadra quadra);
+char* getEspessuraQuad(Quadra quadra);
 // retorna o valor da espessura da borda da quadra
 
-void setEspessuraQuad(Quadra quadra, double espessura);
+void setEspessuraQuad(Quadra quadra, char espessura[]);
 // atualiza o valor da espessura da borda da quadra
 
 char* getCorbQuad(Quadra quadra);

@@ -4,7 +4,7 @@
 
 typedef void* Circulo;
 
-Circulo criarCirculo(int id, double x, double y, double r, double espessura, char corp[], char corb[]);
+Circulo criarCirculo(int id, double x, double y, double r, char espessura[], char corp[], char corb[]);
 //"constructor" da estrutura circulo
 
 int getIdCirc(Circulo circ);
@@ -28,10 +28,10 @@ double getRCirc(Circulo circ);
 void setRCirc(Circulo circ, double r);
 // atualiza o valor do raio do circulo
 
-double getEspessuraCirc(Circulo circ);
+char* getEspessuraCirc(Circulo circ);
 // retorna o valor da espessura da borda do circulo
 
-void setEspessuraCirc(Circulo circ, double espessura);
+void setEspessuraCirc(Circulo circ, char espessura[]);
 // atualiza o valor da espessura da borda do circulo
 
 char* getCorbCirc(Circulo circ);
