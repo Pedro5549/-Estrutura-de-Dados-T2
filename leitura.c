@@ -116,29 +116,32 @@ void qry(Lista list[7], char path[], char nomeSaida[]){
             intersecao(svg,saida,list,j,k);
         }
         else if(strcmp(tipo,"i?") == 0){
-            fscanf(consulta,"%d %lf %lf\n",&j,&x,&y);
-            fprintf(saida,"%s %d %lf %lf\n",tipo,j,x,y);
-            //iInstrumentoUrbanoanf(consulta,"%d %s %s\n",&j,corb,corp);
-            fprintf(saida,"%s %d %s %s\n",tipo,j,corb,corp);
-            //pnt(svg,saida,list,j,corb,corp);
+	        fscanf(consulta,"%d %lf %lf\n",&j,&x,&y);
+	        fprintf(saida,"%s %d %lf %lf\n",tipo,j,x,y);
+	        //interno(svg,saida,list,j,x,y)
+        }
+        else if(strcmp(tipo,"pnt") == 0){
+	        fscanf(consulta,"%d %s %s\n",&j,corb,corp);
+	        fprintf(saida,"%s %d %s %s\n",tipo,j,corb,corp);
+	        pnt(saida,list,j,corb,corp);
         }
         else if(strcmp(tipo,"pnt*") == 0){
             fscanf(consulta,"%d %d %s %s\n",&j,&k,corb,corp);
             fprintf(saida,"%s %d %d %s %s\n",tipo,j,k,corb,corp);
             for(i = j; i <= k; i++){
-                //pnt(svg,saida,list,i,corb,corp);
+                pnt(saida,list,i,corb,corp);
             }
         }
         else if(strcmp(tipo,"delf") == 0){
             fscanf(consulta,"%d\n",&j);
             fprintf(saida,"%s %d\n",tipo,j);
-            //delf(svg,saida,list,j);
+            delf(saida,list,j);
         }
         else if(strcmp(tipo,"delf*") == 0){
             fscanf(consulta,"%d %d\n",&j,&k);
             fprintf(saida,"%s %d %d\n",tipo,j,k);
             for(i = j; i <= k; i++){
-                //delf(svg,saida,list,i);
+                delf(saida,list,i);
             }
         }
         else if(strcmp(tipo,"dq") == 0){
@@ -157,12 +160,12 @@ void qry(Lista list[7], char path[], char nomeSaida[]){
         else if(strcmp(tipo,"del") == 0){
             fscanf(consulta,"%s\n", cepid);
             fprintf(saida,"%s %s\n",tipo,cepid);
-            //del(svg,saida,list,cepid);
+            del(svg,saida,list,cepid);
         }
         else if(strcmp(tipo,"cbq") == 0){
             fscanf(consulta,"%lf %lf %lf %s\n", &x, &y ,&h, corb);
             fprintf(saida,"%s %lf %lf %lf %s\n", tipo, x, y ,h, corb);
-            //cbq(saida,list,x,y,i,corb);
+            cbq(saida,list,x,y,i,corb);
         }
         else if(strcmp(tipo,"crd") == 0){
             fscanf(consulta,"%s\n", cepid);

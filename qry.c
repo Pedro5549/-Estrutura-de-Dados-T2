@@ -10,6 +10,96 @@
 #include "svg.h"
 #include "verificacao.h"
 
+void pnt(FILE* txt, Lista list[7], int j, char corb[], char corp[]) {
+    double x, y;
+    No node;
+    Info fig;
+
+    for(node = getFirst(list[0]); node != NULL; node = getNext(node)) {
+        fig = getInfo(node);
+        if (getIdCirc(fig) == j) {
+            setCorbCirc(fig, corb);
+            setCorpCirc(fig, corp);
+            x = getXCirc(fig);
+            y = getYCirc(fig);
+            fprintf(txt, "x: %lf y: %lf\n", x, y);
+            return;
+        }
+    }
+    for(node = getFirst(list[1]); node != NULL; node = getNext(node)) {
+        fig = getInfo(node);
+        if (getIdRet(fig) == j) {
+            setCorbRet(fig, corb);
+            setCorpRet(fig, corp);
+            x = getXRet(fig);
+            y = getYRet(fig);
+            fprintf(txt, "x: %lf y: %lf", x, y);
+            return;
+        }
+    }
+    for(node = getFirst(list[2]); node != NULL; node = getNext(node)) {
+        fig = getInfo(node);
+        if (getIdTxt(fig) == j) {
+            setCorbTxt(fig, corb);
+            setCorpTxt(fig, corp);
+            x = getXTxt(fig);
+            y = getYTxt(fig);
+            fprintf(txt, "x: %lf y: %lf", x, y);
+            return;
+        }
+    }
+}
+
+void delf(FILE* txt, Lista list[7], int j) {
+    No node;
+    Info fig;
+    double x, y, r, espessura, w, h;
+    char *corb, *corp, *text;
+
+    for(node = getFirst(list[0]); node != NULL; node = getNext(node)) {
+        fig = getInfo(node);
+        if (getIdCirc(fig) == j) {
+            x = getXCirc(fig);
+            y = getYCirc(fig);
+            r = getRCirc(fig);
+            espessura = getEspessuraCirc(fig);
+            corb = getCorbCirc(fig);
+            corp = getCorpCirc(fig);
+            fprintf(txt, "id: %d x: %lf y: %lf r: %lf espessura: %lf corb: %s corp: %s\n", j, x, y, r, espessura, corb, corp);
+            removeNode(list[0], node);
+            return;
+        }
+    }
+    for(node = getFirst(list[1]); node != NULL; node = getNext(node)) {
+        fig = getInfo(node);
+        if (getIdRet(fig) == j) {
+            x = getXRet(fig);
+            y = getYRet(fig);
+            w = getWRet(fig);
+            h = getHRet(fig);
+            espessura = getEspessuraRet(fig);
+            corb = getCorbRet(fig);
+            corp = getCorpRet(fig);
+            fprintf(txt, "id: %d x: %lf y: %lf w: %lf h: %lf espessura: %lf corb: %s corp: %s\n", j, x, y, w, h, espessura, corb, corp);
+            removeNode(list[1], node);
+            return;
+        }
+    }
+    for(node = getFirst(list[2]); node != NULL; node = getNext(node)) {
+        fig = getInfo(node);
+        if (getIdTxt(fig) == j) {
+            x = getXTxt(fig);
+            y = getYTxt(fig);
+            corb = getCorbTxt(fig);
+            corp = getCorpTxt(fig);
+            text = getTexto(fig);
+            fprintf(txt, "id: %d x: %lf y: %lf corb: %s corp: %s texto: %s\n", j, x, y, corb, corp, text);
+            removeNode(list[2], node);
+            return;
+        }
+    }
+}
+
 void intersecao(FILE* svg, FILE* txt, Lista list[7], int j, int k){
     No node;
     Info fig1, fig2, aux;
@@ -17,27 +107,27 @@ void intersecao(FILE* svg, FILE* txt, Lista list[7], int j, int k){
     for(node = getFirst(list[0]); node != NULL; node = getNext(node)){
         aux = getInfo(node);
         if(getIdCirc(aux) == j){
-            fig1 == aux;
+            fig1 = aux;
             tipo1 = 'c';
         }
         else if(getIdCirc(aux) == k){
-            fig2 == aux;
+            fig2 = aux;
             tipo2 = 'c';
         }
     }
     for(node = getFirst(list[1]); node != NULL; node = getNext(node)){
         aux = getInfo(node);
         if(getIdRet(aux) == j){
-            fig1 == aux;
+            fig1 = aux;
             tipo1 = 'r';
         }
         else if(getIdRet(aux) == k){
-            fig2 == aux;
+            fig2 = aux;
             tipo2 = 'r';
         }
     }
     if(tipo1 == 'c'){
-        if(tipo2 = 'c'){
+        if(tipo2 == 'c'){
             circuloInt(fig1, j, fig2, k, txt, svg);
         }
         else{
@@ -45,7 +135,7 @@ void intersecao(FILE* svg, FILE* txt, Lista list[7], int j, int k){
         }
     }
     else{
-        if(tipo2 = 'c'){
+        if(tipo2 == 'c'){
             retanguloIntCirculo(fig2, fig1, k, j, txt, svg);
         }
         else{
@@ -78,7 +168,7 @@ void dq(FILE* svg,FILE* txt, Lista list[7],char id[], double r, int flag){
         if(strcmp(getIdIU(info),id) == 0){
             x = getXIU(info);
             y = getYIU(info);
-            encontrado = 0;
+            encontrado = 1;
             fprintf(svg,"\t<circle cx=\"%lf\" cy=\"%lf\" r=\"%lf\" fill=\"black\" stroke=\"black\"/>\n",x,y,r);
             fprintf(txt,"Id: %s X: %lf Y: %lf\n",id,x,y);
             break;
@@ -102,6 +192,118 @@ void dq(FILE* svg,FILE* txt, Lista list[7],char id[], double r, int flag){
         }
         else{
             node = getNext(node);
+        }
+    }
+}
+//TODO: adicionar texto
+void del(FILE* svg, FILE* txt, Lista list[7], char cepid[]) {
+    Info fig;
+    No node;
+    int i = 3;
+    double x, y, w, h, espessura;
+    char *corb, *corp;
+    switch (cepid[0]){
+    case 'h':
+        i = 4;
+        fprintf(txt, "Hidrante: ");
+        break;
+    case 's':
+        i = 5;
+        fprintf(txt, "Semaforo: ");
+        break;
+    case 't':
+        i = 6;
+        fprintf(txt, "Torre de Radio: ");
+        break;
+    }
+
+    if (i == 3) {
+        for(node = getFirst(list[i]); node != NULL; node = getNext(list[i])) {
+            fig = getInfo(node);
+            if (strcmp(cepid, getCEP(node)) == 0) {
+                w = getWQuad(fig);
+                h = getHQuad(fig);
+                x = getXQuad(fig);
+                y = getYQuad(fig);
+                espessura = getEspessuraQuad(fig);
+                corb = getCorbQuad(fig);
+                corp = getCorpQuad(fig);
+                fprintf(txt, "CEP: %s x: %lf y: %lf w: %lf h: %lf espessura: %lf corb: %s corp: %s\n", cepid, x, y, w, h, espessura, corb, corp);
+                x = (w + x)/2;
+                y = (h + y)/2;
+                fprintf(svg, "\t<line x1=\"%lf\" y1=\"%lf\" x2=\"%lf\" y2=\"0\" style=\"stroke: black; stroke-width: 1\" />\n", x, y, x);
+                removeNode(list[i], fig);
+                return;
+            } else {
+                for(node = getFirst(list[i]); node != NULL; node = getNext(list[i])) {
+                    fig = getInfo(node);
+                    if (strcmp(cepid, getCEP(node))) {
+                        x = getXIU(fig);
+                        y = getYIU(fig);
+                        espessura = getEspessuraIU(fig);
+                        corb = getCorbIU(fig);
+                        corp = getCorpIU(fig);
+                        fprintf(svg, "\t<line x1=\"%lf\" y1=\"%lf\" x2=\"%lf\" y2=\"0\" style=\"stroke: black; stroke-width: 1 />\n", x, y, x);
+                        fprintf(txt, "ID: %s x: %lf y: %lf espessura: %lf corb: %s corp: %s", cepid, x, y, espessura, corb, corp);
+                        removeNode(list[i], fig);
+                        return;
+                    }
+                }
+            }
+        }
+    }
+}
+
+void cbq(FILE* txt, Lista list[7], double x, double y, double r, char cstrk[]) {
+    No node;
+    Info fig;
+    for(node = getFirst(list[3]); node != NULL; node = getNext(list[3])) {
+        fig = getInfo(node);
+        if (quadraInternoCirc(fig, x, y, r)) {
+            setCorbQuad(fig, cstrk);
+            fprintf(txt, "CEP: %s\n", getCEP(fig));
+        }
+    }
+}
+
+void crd(FILE* txt, Lista list[7], char cepid[]) {
+    No node;
+    Info fig;
+    int = 3;
+    double x, y;
+    switch (cepid) {
+    case 'h':
+        i = 4;
+        fprintf(txt, "Hidrante: ");
+        break;
+    case 's':
+        i = 5;
+        fprintf(txt, "Semaforo: ");
+        break;
+    case 't':
+        i = 6;
+        fprintf(txt, "Torre de Radio: ");
+        break;  
+    }
+    if (i == 3) {
+        for (node = getFirst(list[i]); node != NULL; node = getNext(list[i])) {
+            fig = getInfo(node);
+            if (strcmp(cepid, getCEP(fig)) == 0) {
+                x = getXQuad(fig);
+                y = getYQuad(fig);
+                fprintf(txt, "%lf %lf\n", x, y);
+                return;
+            }
+        }
+    } else {
+        for (node = getFirst(list[i]); node != NULL; node = getNext(list[i])) {
+            fig = getInfo(node);
+            if (strcmp(cepid, getIdIU(fig)) == 0) {
+                x = getXIU(fig);
+                y = getYIU(fig);
+                fprintf(txt, "%lf %lf\n", x, y);
+                return;
+            }
         }
     }
 }
