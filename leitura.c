@@ -158,7 +158,7 @@ void qry(Lista list[7], char path[], char nomeSaida[]){
                 fprintf(saida,"%s # %s %lf",tipo,cepid,h);
             }else{
                 i = 0;
-                fscanf(consulta,"%s %lf",cepid,&h);
+                fscanf(consulta,"%lf",&h);
                 fprintf(saida,"%s %s %lf",tipo,cepid,h);
             }
             dq(svg,saida,list,cepid,h,i);
@@ -171,9 +171,9 @@ void qry(Lista list[7], char path[], char nomeSaida[]){
         else if(strcmp(tipo,"cbq") == 0){
             fscanf(consulta,"%lf %lf %lf %s\n", &x, &y ,&h, corb);
             fprintf(saida,"%s %lf %lf %lf %s\n", tipo, x, y ,h, corb);
-            cbq(saida,list,x,y,i,corb);
+            cbq(saida,list,x,y,h,corb);
         }
-        else if(strcmp(tipo,"crd") == 0){
+        else if(strcmp(tipo,"crd?") == 0){
             fscanf(consulta,"%s\n", cepid);
             fprintf(saida,"%s %s\n",tipo,cepid);
             crd(saida,list,cepid);

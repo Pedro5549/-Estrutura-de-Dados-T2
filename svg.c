@@ -12,7 +12,7 @@ FILE* iniciarSvg(char filename[]){
     
     FILE* svg = fopen(filename, "w");
     if(svg == NULL){
-        printf("erro ao abrir o arquivo\n");
+        printf("erro ao abrir o arquivo svg\n");
         exit(1);
     }
     fprintf(svg, "<svg>\n");

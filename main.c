@@ -61,6 +61,6 @@ int main(int argc, char *argv[]){
         free(path);
     }
 	free(outPath);
-    printf("Mémoria desalocada\n");   
+    printf("Memoria desalocada\n");   
     return 0;
 }
