@@ -78,7 +78,7 @@ void geo(Lista list[7], char geoArq[], char saida[]){
             insert(list[6], criarInstrumento(cepid,x,y,er,corRP,corRB));
         }
         else if(strcmp(tipo,"cq") == 0){
-            fscanf(geo,"%a %s %s\n", eq, corQP, corQB);
+            fscanf(geo,"%s %s %s\n", eq, corQP, corQB);
         }
         else if(strcmp(tipo,"ch") == 0){
             fscanf(geo,"%s %s %s\n", eh, corHP, corHB);
@@ -124,7 +124,7 @@ void qry(Lista list[7], char path[], char nomeSaida[]){
         else if(strcmp(tipo,"i?") == 0){
 	        fscanf(consulta,"%d %lf %lf\n",&j,&x,&y);
 	        fprintf(saida,"%s %d %lf %lf\n",tipo,j,x,y);
-	        PontoInterno(svg,saida,list,j,x,y);
+	        pontoInterno(svg,saida,list,j,x,y);
         }
         else if(strcmp(tipo,"pnt") == 0){
 	        fscanf(consulta,"%d %s %s\n",&j,corb,corp);
@@ -181,7 +181,7 @@ void qry(Lista list[7], char path[], char nomeSaida[]){
         else if(strcmp(tipo,"car") == 0){
             fscanf(consulta,"%lf %lf %lf %lf\n", &x, &y ,&w, &h);
             fprintf(saida,"%s %lf %lf %lf %lf\n", tipo, x, y, w, h);
-            //car(svg,saida,list,x,y,w,h);
+            car(svg,saida,list,x,y,w,h);
         }
 
     }

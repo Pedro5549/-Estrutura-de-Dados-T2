@@ -230,7 +230,7 @@ void dq(FILE* svg,FILE* txt, Lista list[7],char id[], double r, int flag){
         info = getInfo(node);
         if(quadraInternoCirc(info,x,y,r)){
             if(flag){
-                fprintf(svg,"\t<rect x=\"%lf\" y=\"%lf\" width=\"%lf\" height=\"%lf\" fill=\"beige\" stroke=\"olive\"  stroke-width=\"%lf\" rx=\"20\"/>\n",getXQuad(info),getYQuad(info),getWQuad(info),getHQuad(info),getEspessuraQuad(info));
+                fprintf(svg,"\t<rect x=\"%lf\" y=\"%lf\" width=\"%lf\" height=\"%lf\" fill=\"beige\" stroke=\"olive\"  stroke-width=\"%s\" rx=\"20\"/>\n",getXQuad(info),getYQuad(info),getWQuad(info),getHQuad(info),getEspessuraQuad(info));
             }
             fprintf(txt,"Quadra removida: %s", getCEP(info));
             aux = node;
