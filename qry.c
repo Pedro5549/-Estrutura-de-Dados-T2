@@ -217,7 +217,7 @@ void dq(FILE* svg,FILE* txt, Lista list[7],char id[], double r, int flag){
             y = getYIU(info);
             encontrado = 1;
             fprintf(svg,"\t<circle cx=\"%lf\" cy=\"%lf\" r=\"%lf\" fill=\"black\" stroke=\"black\"/>\n",x,y,r);
-            fprintf(txt,"Id: %s X: %lf Y: %lf",id,x,y);
+            fprintf(txt,"Id: %s X: %lf Y: %lf\n",id,x,y);
             break;
         }
     }
@@ -241,6 +241,8 @@ void dq(FILE* svg,FILE* txt, Lista list[7],char id[], double r, int flag){
             node = getNext(node);
         }
     }
+    fprintf(svg,"\t<circle cx=\"%lf\" cy=\"%lf\" r=\"6\" fill=\"none\" stroke=\"red\"/>\n",x,y);
+    fprintf(svg,"\t<circle cx=\"%lf\" cy=\"%lf\" r=\"7\" fill=\"none\" stroke=\"blue\"/>\n",x,y);
 }
 
 void del(FILE* svg, FILE* txt, Lista list[7], char cepid[]) {
@@ -294,7 +296,7 @@ void del(FILE* svg, FILE* txt, Lista list[7], char cepid[]) {
                 espessura = getEspessuraIU(fig);
                 corb = getCorbIU(fig);
                 corp = getCorpIU(fig);
-                fprintf(svg, "\t<line x1=\"%lf\" y1=\"%lf\" x2=\"%lf\" y2=\"0\" style=\"stroke: black; stroke-width: 1 />\n", x, y, x);
+                fprintf(svg, "\t<line x1=\"%lf\" y1=\"%lf\" x2=\"%lf\" y2=\"0\" style=\"stroke: black; stroke-width: 1\"/>\n", x, y, x);
                 fprintf(svg, "\t<text x=\"%lf\" y=\"0\">ID: %s</text>\n", x + 3,cepid);
                 fprintf(txt, "ID: %s x: %lf y: %lf espessura: %s corb: %s corp: %s\n", cepid, x, y, espessura, corb, corp);
                 removeNode(list[i], node);
@@ -366,6 +368,7 @@ void crd(FILE* txt, Lista list[7], char cepid[]) {
 void car(FILE* svg, FILE* txt, Lista list[7], double px, double py, double pw, double ph) {
     Info fig;
     No node;
+    char textoArea[30];
     double area = 0, x, y, w, h;
     fprintf(svg, "\t<rect x=\"%lf\" y=\"%lf\" width=\"%lf\" height=\"%lf\"/>\n", px, py, pw, ph);
     fprintf(svg, "\t<line x1=\"%lf\" y1=\"%lf\" x2=\"%lf\" y2=\"0\"/>\n", px, py, px);
@@ -377,8 +380,9 @@ void car(FILE* svg, FILE* txt, Lista list[7], double px, double py, double pw, d
             w = getWQuad(fig);
             h = getHQuad(fig);
             area += (w * h);
-            fprintf(svg, "\t<text x=\"%lf\" y=\"%lf\">Area: %lf m²</text>\n", x + w/2, y + h/2, w * h);
-            fprintf(txt, "CEP: %s\n", getCEP(fig));
+            sprintf(textoArea,"Area: %lf m²",w * h);
+            insert(list[2],criarTexto(-1,x + w/2, y + h/2,"black","black",textoArea));
+            fprintf(txt, "CEP: %s %lf\n", getCEP(fig), w * h);
         }
     }
     fprintf(svg, "\t<text x=\"%lf\" y=\"0\">Area total: %lf m²</text>\n", px + 3, area);

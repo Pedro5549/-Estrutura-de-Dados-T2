@@ -32,11 +32,11 @@ void desenharSvg(FILE* svg, Lista list[7]){
     for(node = getFirst(list[1]); node != NULL; node = getNext(node)){
         desenharRetangulo(svg, getInfo(node));
     }
-    for(node = getFirst(list[2]); node != NULL; node = getNext(node)){
-        desenharTexto(svg, getInfo(node));
-    }
     for(node = getFirst(list[3]); node != NULL; node = getNext(node)){
         desenharQuadra(svg, getInfo(node));
+    }
+    for(node = getFirst(list[2]); node != NULL; node = getNext(node)){
+        desenharTexto(svg, getInfo(node));
     }
     for(int i = 4; i < 7; i++){
         for(node = getFirst(list[i]); node != NULL; node = getNext(node)){

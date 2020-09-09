@@ -155,11 +155,11 @@ void qry(Lista list[7], char path[], char nomeSaida[]){
             if(strcmp(cepid,"#") == 0){
                 i = 1;
                 fscanf(consulta,"%s %lf",cepid,&h);
-                fprintf(saida,"%s # %s %lf",tipo,cepid,h);
+                fprintf(saida,"%s # %s %lf\n",tipo,cepid,h);
             }else{
                 i = 0;
                 fscanf(consulta,"%lf",&h);
-                fprintf(saida,"%s %s %lf",tipo,cepid,h);
+                fprintf(saida,"%s %s %lf\n",tipo,cepid,h);
             }
             dq(svg,saida,list,cepid,h,i);
         }
